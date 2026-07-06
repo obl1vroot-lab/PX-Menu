@@ -768,13 +768,23 @@ task.spawn(function()
         UpdateLoading(progress, "Lade " .. mod.name .. "...")
         
         local success, result = pcall(function()
-            local code = game:HttpGet(BASE_URL .. mod.file, true)
-            local func = loadstring(code)
+            local url = BASE_URL .. mod.file .. "?t=" .. tick()
+            print("[PX-Menu] Loading: " .. url)
+            local code = game:HttpGet(url, true)
+            print("[PX-Menu] Got code for " .. mod.name .. " (" .. #code .. " bytes)")
+            local func, err = loadstring(code)
             if func then
+                print("[PX-Menu] loadstring OK for " .. mod.name)
                 local moduleFunc = func()
-                if moduleFunc then
+                if moduleFunc and type(moduleFunc) == "function" then
+                    print("[PX-Menu] Executing module: " .. mod.name)
                     moduleFunc(PXMenu, mod.page)
+                    print("[PX-Menu] Module OK: " .. mod.name)
+                else
+                    warn("[PX-Menu] Module " .. mod.name .. " did not return a function! Got: " .. type(moduleFunc))
                 end
+            else
+                warn("[PX-Menu] loadstring FAILED for " .. mod.name .. ": " .. tostring(err))
             end
         end)
         

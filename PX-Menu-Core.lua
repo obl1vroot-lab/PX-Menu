@@ -1,7 +1,7 @@
 --[[
     PX-Menu v4.0 — TLMenu-Style Rewrite
     Game: German Voice (ID: 136162036182779)
-    Toggle Key: RightShift (configurable)
+    Toggle Key: K (configurable)
     
     Features copied from TLMenu:
     - Fly (WASD+Camera, Speed Levels, Animations)
@@ -511,7 +511,7 @@ local IndLabel = Instance.new("TextLabel", Indicator)
 IndLabel.Size = UDim2.new(1, -10, 1, 0)
 IndLabel.Position = UDim2.new(0, 8, 0, 0)
 IndLabel.BackgroundTransparency = 1
-IndLabel.Text = "PX-Menu | " .. ExecutorName .. " | [RightShift]"
+IndLabel.Text = "PX-Menu | " .. ExecutorName .. " | [K]"
 IndLabel.TextColor3 = ExecutorTrusted and C.green or C.yellow
 IndLabel.Font = Enum.Font.GothamBold
 IndLabel.TextSize = 11
@@ -697,14 +697,16 @@ local function showTab(name)
     for _, p in pairs(Pages) do p.Visible = false end
     for n, b in pairs(tabBtns) do
         b.BackgroundColor3 = C.tabBg
-        b.ImageColor3 = C.textDim
+        local icon = tabIcons[n]
+        if icon then icon.ImageColor3 = C.textDim end
         local lbl = b:FindFirstChild("TabLabel")
         if lbl then lbl.TextColor3 = C.textDim end
     end
     if Pages[name] then Pages[name].Visible = true end
     if tabBtns[name] then
         tabBtns[name].BackgroundColor3 = C.accentDim
-        tabBtns[name].ImageColor3 = C.accent
+        local icon = tabIcons[name]
+        if icon then icon.ImageColor3 = C.accent end
         local lbl = tabBtns[name]:FindFirstChild("TabLabel")
         if lbl then lbl.TextColor3 = C.accent end
     end
@@ -1977,7 +1979,7 @@ Label(tabSettings, "Keybinds", C.accent)
 
 local keybindDefs = {}
 local keybindObjs = {}
-local toggleKey = "RightShift"
+local toggleKey = "K"
 
 local kbToggle = Instance.new("Frame", tabSettings)
 kbToggle.Size = UDim2.new(1, 0, 0, 36)
@@ -2034,8 +2036,8 @@ Sep(tabSettings)
 Label(tabSettings, "Aktionen", C.accent)
 
 Btn(tabSettings, "Settings zuruecksetzen", function()
-    toggleKey = "RightShift"
-    kbBtn.Text = "RightShift"
+    toggleKey = "K"
+    kbBtn.Text = "K"
     for _, kb in ipairs(keybindObjs) do
         kb.setBind(nil)
     end

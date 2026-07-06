@@ -53,7 +53,7 @@ local C = {
 	CLOSE_HOVER=Color3.fromRGB(200,30,30),
 	CLOSE_IMG="rbxassetid://121032825074289", KEYBIND=Enum.KeyCode.L,
 	WROOT="PXSteal", CACHE_DIR="Cache", SAVED_DIR="SavedOutfits",
-	DISK_DIR="TLSteal/Cache", DISK_TTL=86400, SAVED_FILE="saved_outfits.dat",
+	DISK_DIR="PXSteal/Cache", DISK_TTL=86400, SAVED_FILE="saved_outfits.dat",
 	REMOTE="BLINK_RELIABLE_REMOTE", DEBUG=false,
 }
 local PANEL_H_BASE, PANEL_H_CARDS = 192, 440
@@ -346,7 +346,7 @@ local SavedOutfitsState = {
 	workspacePath=C.WROOT.."/"..C.SAVED_DIR.."/", loaded=false, lastLoad=0, syncInterval=2,
 }
 local function getSavedOutfitsFilePath() return SavedOutfitsState.workspacePath .. C.SAVED_FILE end
-local function legacySavedOutfitsFilePath() return "TLMenu_Outfits/TLSavedOutfits.json" end
+local function legacySavedOutfitsFilePath() return "PXMenu_Outfits/PXSavedOutfits.json" end
 
 local function persistSavedOutfits()
 	local encoded = encodeStoredJson(SavedOutfitsState.outfits)
@@ -671,7 +671,7 @@ local Panel, TitleBar, SearchBox, SearchStatusLabel, ConfirmBtn, SavedOutfitsBtn
 	tIcon.Image = "rbxassetid://125139667304157"; tIcon.Size = UDim2.fromOffset(24,24); tIcon.Position = UDim2.fromOffset(6,10)
 	tIcon.BackgroundTransparency = 1; tIcon.ImageColor3 = Color3.fromRGB(255,255,255); tIcon.ZIndex = 21; tIcon.Parent = TitleBar
 
-	local tLabel = Instance.new("TextLabel"); tLabel.Text = "TLSTEAL AVATARS"
+	local tLabel = Instance.new("TextLabel"); tLabel.Text = "PXSTEAL AVATARS"
 	tLabel.Size = UDim2.new(1,-158,1,0); tLabel.Position = UDim2.fromOffset(38,0)
 	tLabel.BackgroundTransparency = 1; tLabel.TextSize = 13; tLabel.TextColor3 = C.TEXT1
 	tLabel.TextXAlignment = Enum.TextXAlignment.Left; tLabel.ZIndex = 21; tLabel.Parent = TitleBar; applyTextStyle(tLabel)

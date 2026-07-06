@@ -771,7 +771,10 @@ task.spawn(function()
             local code = game:HttpGet(BASE_URL .. mod.file, true)
             local func = loadstring(code)
             if func then
-                func(PXMenu, mod.page)
+                local moduleFunc = func()
+                if moduleFunc then
+                    moduleFunc(PXMenu, mod.page)
+                end
             end
         end)
         

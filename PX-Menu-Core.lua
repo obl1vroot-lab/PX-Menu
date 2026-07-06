@@ -1,11 +1,10 @@
 --[[
-    PX-Menu v4.0 — TLMenu-Style Rewrite
+    PX-Menu v4.0
     Game: German Voice (ID: 136162036182779)
     Toggle Key: K (configurable)
     
-    Features copied from TLMenu:
-    - Fly (WASD+Camera, Speed Levels, Animations)
-    - Noclip, Spin, ESP, Shaders
+    Features:
+    - Fly, Noclip, ESP, Shaders
     - Anti-VC Ban, Invisible
     - Fling (SkidFling Engine)
     - Avatar Outfits Stealer
@@ -92,8 +91,124 @@ lp.CharacterAdded:Connect(function(c)
 end)
 
 -- ════════════════════════════════════════════════════════════════
---  COLORS (PX-Menu Purple Theme)
+--  LANGUAGE SYSTEM
 -- ════════════════════════════════════════════════════════════════
+
+local lang = "DE"
+
+local L = {
+    DE = {
+        -- Tabs
+        tabHome = "HOME", tabChar = "CHARACTER", tabScripts = "SCRIPTS",
+        tabActions = "ACTIONS", tabPlayers = "PLAYERS", tabSettings = "SETTINGS",
+        -- Home
+        gameInfo = "Game Info", spielerProfil = "Spieler Profil", stats = "Stats",
+        systemUtils = "System Utils", rejoin = "Rejoin", serverHop = "Server Hop",
+        -- Character
+        quickActions = "Quick Actions", respawn = "Respawn",
+        voiceChat = "Voice Chat", antiVCBan = "Anti-VC Ban",
+        movement = "Bewegung", fly = "Fly", flySpeed = "Fly Speed",
+        noclip = "Noclip", antiFling = "Anti-Fling",
+        walkSpeed = "WalkSpeed", jumpPower = "JumpPower",
+        visual = "Visual", invisible = "Invisible",
+        -- Scripts sub-tabs
+        troll = "TROLL", movementSub = "MOVEMENT", visualSub = "VISUAL",
+        misc = "MISC", combat = "COMBAT",
+        -- Troll
+        headSeatDesc = "HeadSeat - Spieler zum Sitzen zwingen",
+        headSeatZiel = "HeadSeat Ziel", alleHeadSeat = "Alle HeadSeat",
+        spielerAktionen = "Spieler Aktionen",
+        hochwerfen = "Hochwerfen", fliegenLassen = "Fliegen lassen",
+        wegrutschen = "Wegrutschen", festnageln = "Festnageln",
+        schwerkraftSpieler = "Schwerkraft Spieler", plattDruecken = "Platt druecken",
+        soundSpam = "Sound Spam", lauterSound = "Lauter Sound", sirenSound = "Siren Sound",
+        alleSpieler = "Alle Spieler",
+        alleHochwerfen = "Alle Hochwerfen", alleRotieren = "Alle Rotieren",
+        spielerVerfolgen = "Spieler Verfolgen",
+        zuSpielerTelep = "Zu Spieler telep.", hinterSpieler = "Hinter Spieler",
+        aufSpielerStehen = "Auf Spieler stehen",
+        listeAktualisieren = "Liste aktualisieren",
+        -- Visual
+        esp = "ESP", shaders = "Shaders",
+        umgebung = "Umgebung", schwerkraft = "Schwerkraft",
+        nachtMode = "Nacht Mode", tagMode = "Tag Mode",
+        dunkelheit = "Dunkelheit", helligkeitMax = "Helligkeit Max",
+        fogEntfernen = "Fog Entfernen", bodenZerstoeren = "Boden zerstoeren",
+        -- Misc
+        antiAfk = "Anti-AFK", aktivieren = "aktivieren", deaktivieren = "deaktivieren",
+        server = "Server", copyServerId = "Copy Server ID",
+        -- Combat
+        flingEngine = "Fling Engine (SkidFling)",
+        flingStart = "Fling Start", flingStop = "Fling Stop",
+        -- Actions/Players
+        zielSpieler = "Ziel Spieler auswaehlen", akionen = "Aktionen",
+        tpZuSpieler = "Teleportiere zu Spieler",
+        hinterSpieler2 = "Hinter Spieler", aufSpielerStehen2 = "Auf Spieler stehen",
+        spectate = "Spectate Spieler", spectateStop = "Spectate Stoppen",
+        -- Settings
+        keybinds = "Keybinds", menuToggle = "Menu Toggle",
+        settingsZurueck = "Settings zuruecksetzen", menuSchliessen = "Menu schliessen",
+        sprache = "Sprache",
+        -- Avatar
+        openAvatarStealer = "PX Avatar Stealer",
+        -- Loading
+        loadCore = "Initialisiere Core...", loadGameDet = "Lade Game Detection...",
+        loadFeatures = "Lade Features...", loadUI = "Erstelle UI...",
+        loadFinal = "Finalisiere...", loadDone = "Fertig!",
+    },
+    EN = {
+        tabHome = "HOME", tabChar = "CHARACTER", tabScripts = "SCRIPTS",
+        tabActions = "ACTIONS", tabPlayers = "PLAYERS", tabSettings = "SETTINGS",
+        gameInfo = "Game Info", spielerProfil = "Player Profile", stats = "Stats",
+        systemUtils = "System Utils", rejoin = "Rejoin", serverHop = "Server Hop",
+        quickActions = "Quick Actions", respawn = "Respawn",
+        voiceChat = "Voice Chat", antiVCBan = "Anti-VC Ban",
+        movement = "Movement", fly = "Fly", flySpeed = "Fly Speed",
+        noclip = "Noclip", antiFling = "Anti-Fling",
+        walkSpeed = "WalkSpeed", jumpPower = "JumpPower",
+        visual = "Visual", invisible = "Invisible",
+        troll = "TROLL", movementSub = "MOVEMENT", visualSub = "VISUAL",
+        misc = "MISC", combat = "COMBAT",
+        headSeatDesc = "HeadSeat - Force player to sit",
+        headSeatZiel = "HeadSeat Target", alleHeadSeat = "All HeadSeat",
+        spielerAktionen = "Player Actions",
+        hochwerfen = "Throw", fliegenLassen = "Spin Launch",
+        wegrutschen = "Slide Away", festnageln = "Anchor",
+        schwerkraftSpieler = "Gravity Player", plattDruecken = "Flatten",
+        soundSpam = "Sound Spam", lauterSound = "Loud Sound", sirenSound = "Siren Sound",
+        alleSpieler = "All Players",
+        alleHochwerfen = "All Throw", alleRotieren = "All Rotate",
+        spielerVerfolgen = "Track Player",
+        zuSpielerTelep = "Teleport to", hinterSpieler = "Behind",
+        aufSpielerStehen = "Stand on",
+        listeAktualisieren = "Refresh List",
+        esp = "ESP", shaders = "Shaders",
+        umgebung = "Environment", schwerkraft = "Gravity",
+        nachtMode = "Night Mode", tagMode = "Day Mode",
+        dunkelheit = "Darkness", helligkeitMax = "Max Brightness",
+        fogEntfernen = "Remove Fog", bodenZerstoeren = "Destroy Floor",
+        antiAfk = "Anti-AFK", aktivieren = "Enable", deaktivieren = "Disable",
+        server = "Server", copyServerId = "Copy Server ID",
+        flingEngine = "Fling Engine (SkidFling)",
+        flingStart = "Fling Start", flingStop = "Fling Stop",
+        zielSpieler = "Select Target Player", akionen = "Actions",
+        tpZuSpieler = "Teleport to Player",
+        hinterSpieler2 = "Behind Player", aufSpielerStehen2 = "Stand on Player",
+        spectate = "Spectate Player", spectateStop = "Stop Spectating",
+        keybinds = "Keybinds", menuToggle = "Menu Toggle",
+        settingsZurueck = "Reset Settings", menuSchliessen = "Close Menu",
+        sprache = "Language",
+        openAvatarStealer = "PX Avatar Stealer",
+        loadCore = "Initializing Core...", loadGameDet = "Loading Game Detection...",
+        loadFeatures = "Loading Features...", loadUI = "Creating UI...",
+        loadFinal = "Finalizing...", loadDone = "Done!",
+    },
+}
+
+local function T(key)
+    local set = L[lang] or L.DE
+    return set[key] or L.DE[key] or key
+end
 
 local C = {
     bg = Color3.fromRGB(15, 15, 20),
@@ -548,7 +663,7 @@ local LoadSub = Instance.new("TextLabel", LoadingFrame)
 LoadSub.Size = UDim2.new(1, 0, 0, 16)
 LoadSub.Position = UDim2.new(0, 0, 0, 45)
 LoadSub.BackgroundTransparency = 1
-LoadSub.Text = "TLMenu Features Edition"
+LoadSub.Text = "PX-Menu Features Edition"
 LoadSub.TextColor3 = C.textDim
 LoadSub.Font = Enum.Font.Gotham
 LoadSub.TextSize = 11
@@ -752,12 +867,12 @@ tabLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 Instance.new("UIPadding", tabScroll).PaddingLeft = UDim.new(0, 2)
 
 local tabData = {
-    {name = "HOME", icon = "rbxassetid://3926305904", page = tabHome},
-    {name = "CHARACTER", icon = "rbxassetid://3926305904", page = tabChar},
-    {name = "SCRIPTS", icon = "rbxassetid://3926305904", page = tabScripts},
-    {name = "ACTIONS", icon = "rbxassetid://3926305904", page = tabActions},
-    {name = "PLAYERS", icon = "rbxassetid://3926305904", page = tabPlayers},
-    {name = "SETTINGS", icon = "rbxassetid://3926305904", page = tabSettings},
+    {name = "HOME", label = "tabHome", icon = "rbxassetid://3926305904", page = tabHome},
+    {name = "CHARACTER", label = "tabChar", icon = "rbxassetid://3926305904", page = tabChar},
+    {name = "SCRIPTS", label = "tabScripts", icon = "rbxassetid://3926305904", page = tabScripts},
+    {name = "ACTIONS", label = "tabActions", icon = "rbxassetid://3926305904", page = tabActions},
+    {name = "PLAYERS", label = "tabPlayers", icon = "rbxassetid://3926305904", page = tabPlayers},
+    {name = "SETTINGS", label = "tabSettings", icon = "rbxassetid://3926305904", page = tabSettings},
 }
 
 for i, td in ipairs(tabData) do
@@ -802,7 +917,7 @@ end
 --  HOME TAB
 -- ════════════════════════════════════════════════════════════════
 
-Label(tabHome, "Game Info", C.accent)
+Label(tabHome, T("gameInfo"), C.accent)
 
 local gameInfoCard = Instance.new("Frame", tabHome)
 gameInfoCard.Size = UDim2.new(1, 0, 0, 100)
@@ -842,7 +957,7 @@ gameDetails.TextSize = 10
 gameDetails.TextXAlignment = Enum.TextXAlignment.Left
 gameDetails.TextWrapped = true
 
-Label(tabHome, "Spieler Profil", C.accent)
+Label(tabHome, T("spielerProfil"), C.accent)
 
 local profileCard = Instance.new("Frame", tabHome)
 profileCard.Size = UDim2.new(1, 0, 0, 50)
@@ -879,7 +994,7 @@ idLbl.Font = Enum.Font.Gotham
 idLbl.TextSize = 10
 idLbl.TextXAlignment = Enum.TextXAlignment.Left
 
-Label(tabHome, "Stats", C.accent)
+Label(tabHome, T("stats"), C.accent)
 
 local statsCard = Instance.new("Frame", tabHome)
 statsCard.Size = UDim2.new(1, 0, 0, 40)
@@ -938,7 +1053,7 @@ task.spawn(function()
     end
 end)
 
-Label(tabHome, "System Utils", C.accent)
+Label(tabHome, T("systemUtils"), C.accent)
 
 Btn(tabHome, "Rejoin", function()
     TeleportService:TeleportToPlaceInstance(placeId, game.JobId, lp)
@@ -967,7 +1082,7 @@ end)
 --  CHARACTER TAB
 -- ════════════════════════════════════════════════════════════════
 
-Label(tabChar, "Quick Actions", C.accent)
+Label(tabChar, T("quickActions"), C.accent)
 
 Btn(tabChar, "Rejoin", function()
     TeleportService:TeleportToPlaceInstance(placeId, game.JobId, lp)
@@ -978,7 +1093,7 @@ Btn(tabChar, "Respawn", function()
 end)
 
 Sep(tabChar)
-Label(tabChar, "Voice Chat", C.accent)
+Label(tabChar, T("voiceChat"), C.accent)
 
 local antiVCBanState = false
 local antiVCConns = {}
@@ -1012,7 +1127,7 @@ Toggle(tabChar, "Anti-VC Ban", function(on)
 end)
 
 Sep(tabChar)
-Label(tabChar, "Movement", C.accent)
+Label(tabChar, T("movement"), C.accent)
 
 local flySpeedValue = 160
 local flyActive = false
@@ -1103,18 +1218,18 @@ Toggle(tabChar, "Anti-Fling", function(on)
 end)
 
 Sep(tabChar)
-Label(tabChar, "Stats", C.accent)
+Label(tabChar, T("stats"), C.accent)
 
-Slider(tabChar, "WalkSpeed", 0, 500, 16, function(v)
+Slider(tabChar, T("walkSpeed"), 0, 500, 16, function(v)
     if humanoid then humanoid.WalkSpeed = v end
 end)
 
-Slider(tabChar, "JumpPower", 0, 500, 50, function(v)
+Slider(tabChar, T("jumpPower"), 0, 500, 50, function(v)
     if humanoid then humanoid.JumpPower = v end
 end)
 
 Sep(tabChar)
-Label(tabChar, "Visual", C.accent)
+Label(tabChar, T("visual"), C.accent)
 
 local invisActive = false
 local invisParts = {}
@@ -1288,12 +1403,12 @@ local subCombat = createSubPage("COMBAT")
 --  TROLL SUB-TAB
 -- ════════════════════════════════════════════════════════════════
 
-Label(subTroll, "HeadSeat - Spieler zum Sitzen zwingen", C.accent)
+Label(subTroll, T("headSeatDesc"), C.accent)
 
 local headSeatTarget = nil
 local plListTroll = PlayerListWidget(subTroll, function(p) headSeatTarget = p end)
 
-Btn(subTroll, "HeadSeat Ziel", function()
+Btn(subTroll, T("headSeatZiel"), function()
     if headSeatTarget and headSeatTarget.Character then
         local head = headSeatTarget.Character:FindFirstChild("Head")
         local tgtHRP = headSeatTarget.Character:FindFirstChild("HumanoidRootPart")
@@ -1316,7 +1431,7 @@ Btn(subTroll, "HeadSeat Ziel", function()
     end
 end)
 
-Btn(subTroll, "Alle HeadSeat", function()
+Btn(subTroll, T("alleHeadSeat"), function()
     for _, p in ipairs(Players:GetPlayers()) do
         if p ~= lp and p.Character then
             local head = p.Character:FindFirstChild("Head")
@@ -1342,9 +1457,9 @@ Btn(subTroll, "Alle HeadSeat", function()
 end)
 
 Sep(subTroll)
-Label(subTroll, "Spieler Aktionen", C.accent)
+Label(subTroll, T("spielerAktionen"), C.accent)
 
-Btn(subTroll, "Hochwerfen", function()
+Btn(subTroll, T("hochwerfen"), function()
     if headSeatTarget and headSeatTarget.Character then
         local tgtHRP = headSeatTarget.Character:FindFirstChild("HumanoidRootPart")
         if tgtHRP then
@@ -1356,7 +1471,7 @@ Btn(subTroll, "Hochwerfen", function()
     end
 end)
 
-Btn(subTroll, "Fliegen lassen", function()
+Btn(subTroll, T("fliegenLassen"), function()
     if headSeatTarget and headSeatTarget.Character then
         local tgtHRP = headSeatTarget.Character:FindFirstChild("HumanoidRootPart")
         if tgtHRP then
@@ -1372,7 +1487,7 @@ Btn(subTroll, "Fliegen lassen", function()
     end
 end)
 
-Btn(subTroll, "Wegrutschen", function()
+Btn(subTroll, T("wegrutschen"), function()
     if headSeatTarget and headSeatTarget.Character then
         local tgtHRP = headSeatTarget.Character:FindFirstChild("HumanoidRootPart")
         if tgtHRP then
@@ -1385,7 +1500,7 @@ Btn(subTroll, "Wegrutschen", function()
     end
 end)
 
-Btn(subTroll, "Festnageln", function()
+Btn(subTroll, T("festnageln"), function()
     if headSeatTarget and headSeatTarget.Character then
         local tgtHRP = headSeatTarget.Character:FindFirstChild("HumanoidRootPart")
         if tgtHRP then
@@ -1397,7 +1512,7 @@ Btn(subTroll, "Festnageln", function()
     end
 end)
 
-Btn(subTroll, "Schwerkraft Spieler", function()
+Btn(subTroll, T("schwerkraftSpieler"), function()
     if headSeatTarget and headSeatTarget.Character then
         local tgtHRP = headSeatTarget.Character:FindFirstChild("HumanoidRootPart")
         if tgtHRP then
@@ -1408,7 +1523,7 @@ Btn(subTroll, "Schwerkraft Spieler", function()
     end
 end)
 
-Btn(subTroll, "Platt druecken", function()
+Btn(subTroll, T("plattDruecken"), function()
     if headSeatTarget and headSeatTarget.Character then
         local tgtHRP = headSeatTarget.Character:FindFirstChild("HumanoidRootPart")
         if tgtHRP then
@@ -1420,9 +1535,9 @@ Btn(subTroll, "Platt druecken", function()
 end)
 
 Sep(subTroll)
-Label(subTroll, "Alle Spieler", C.accent)
+Label(subTroll, T("alleSpieler"), C.accent)
 
-Btn(subTroll, "Alle Hochwerfen", function()
+Btn(subTroll, T("alleHochwerfen"), function()
     for _, p in ipairs(Players:GetPlayers()) do
         if p ~= lp and p.Character then
             local tgtHRP = p.Character:FindFirstChild("HumanoidRootPart")
@@ -1436,7 +1551,7 @@ Btn(subTroll, "Alle Hochwerfen", function()
     end
 end)
 
-Btn(subTroll, "Alle Rotieren", function()
+Btn(subTroll, T("alleRotieren"), function()
     for _, p in ipairs(Players:GetPlayers()) do
         if p ~= lp and p.Character then
             local tgtHRP = p.Character:FindFirstChild("HumanoidRootPart")
@@ -1451,30 +1566,62 @@ Btn(subTroll, "Alle Rotieren", function()
 end)
 
 Sep(subTroll)
-Label(subTroll, "Spieler Verfolgen", C.accent)
+Label(subTroll, T("soundSpam"), C.accent)
 
-Btn(subTroll, "Zu Spieler telep.", function()
+Btn(subTroll, T("lauterSound"), function()
+    if headSeatTarget and headSeatTarget.Character then
+        local tgtHRP = headSeatTarget.Character:FindFirstChild("HumanoidRootPart")
+        if tgtHRP then
+            local s = Instance.new("Sound")
+            s.SoundId = "rbxassetid://138087576"
+            s.Volume = 10
+            s.Parent = tgtHRP
+            s:Play()
+            Debris:AddItem(s, 3)
+        end
+    end
+end)
+
+Btn(subTroll, T("sirenSound"), function()
+    if headSeatTarget and headSeatTarget.Character then
+        local tgtHRP = headSeatTarget.Character:FindFirstChild("HumanoidRootPart")
+        if tgtHRP then
+            local s = Instance.new("Sound")
+            s.SoundId = "rbxassetid://1843463117"
+            s.Volume = 10
+            s.Looped = true
+            s.Parent = tgtHRP
+            s:Play()
+            Debris:AddItem(s, 5)
+        end
+    end
+end)
+
+Sep(subTroll)
+Label(subTroll, T("spielerVerfolgen"), C.accent)
+
+Btn(subTroll, T("zuSpielerTelep"), function()
     if headSeatTarget and headSeatTarget.Character and hrp then
         local t = headSeatTarget.Character:FindFirstChild("HumanoidRootPart")
         if t then hrp.CFrame = t.CFrame * CFrame.new(0, 0, -5) end
     end
 end)
 
-Btn(subTroll, "Hinter Spieler", function()
+Btn(subTroll, T("hinterSpieler"), function()
     if headSeatTarget and headSeatTarget.Character and hrp then
         local t = headSeatTarget.Character:FindFirstChild("HumanoidRootPart")
         if t then hrp.CFrame = t.CFrame * CFrame.new(0, 0, 5) end
     end
 end)
 
-Btn(subTroll, "Auf Spieler stehen", function()
+Btn(subTroll, T("aufSpielerStehen"), function()
     if headSeatTarget and headSeatTarget.Character and hrp then
         local t = headSeatTarget.Character:FindFirstChild("HumanoidRootPart")
         if t then hrp.CFrame = t.CFrame * CFrame.new(0, 3, 0) end
     end
 end)
 
-Btn(subTroll, "Liste aktualisieren", function()
+Btn(subTroll, T("listeAktualisieren"), function()
     plListTroll.refresh()
 end)
 
@@ -1498,7 +1645,7 @@ Toggle(subMovement, "Spin", function(on)
     end
 end)
 
-Btn(subMovement, "Open Avatar Stealer", function()
+Btn(subMovement, T("openAvatarStealer"), function()
     pcall(function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/obl1vroot-lab/PX-Menu/main/AVATAR-STEAL-PANEL.lua"))()
     end)
@@ -1508,7 +1655,7 @@ end)
 --  VISUAL SUB-TAB
 -- ════════════════════════════════════════════════════════════════
 
-Label(subVisual, "ESP - Spieler Markierung", C.accent)
+Label(subVisual, T("esp"), C.accent)
 
 local espEnabled = false
 local espData = {}
@@ -1575,7 +1722,7 @@ Toggle(subVisual, "ESP", function(on)
 end)
 
 Sep(subVisual)
-Label(subVisual, "Shaders", C.accent)
+Label(subVisual, T("shaders"), C.accent)
 
 local shaderActive = false
 local shaderInsts = {}
@@ -1634,17 +1781,19 @@ Toggle(subVisual, "Shaders", function(on)
 end)
 
 Sep(subVisual)
-Label(subVisual, "Umgebung", C.accent)
+Label(subVisual, T("umgebung"), C.accent)
 
-Slider(subVisual, "Schwerkraft", 0, 200, 196, function(v) workspace.Gravity = v end)
+Slider(subVisual, T("schwerkraft"), 0, 200, 196, function(v) workspace.Gravity = v end)
 
-Btn(subVisual, "Nacht Mode", function() Lighting.ClockTime = 0 end)
-Btn(subVisual, "Tag Mode", function() Lighting.ClockTime = 14 end)
-Btn(subVisual, "Fog Entfernen", function()
+Btn(subVisual, T("nachtMode"), function() Lighting.ClockTime = 0 end)
+Btn(subVisual, T("tagMode"), function() Lighting.ClockTime = 14 end)
+Btn(subVisual, T("dunkelheit"), function() Lighting.Brightness = 0; Lighting.ClockTime = 0 end)
+Btn(subVisual, T("helligkeitMax"), function() Lighting.Brightness = 10; Lighting.ClockTime = 14 end)
+Btn(subVisual, T("fogEntfernen"), function()
     Lighting.FogEnd = 999999
     Lighting.FogStart = 0
 end)
-Btn(subVisual, "Boden zerstoeren", function()
+Btn(subVisual, T("bodenZerstoeren"), function()
     local base = workspace:FindFirstChild("Base") or workspace:FindFirstChild("Baseplate")
     if base then base:Destroy() end
 end)
@@ -1653,10 +1802,10 @@ end)
 --  MISC SUB-TAB
 -- ════════════════════════════════════════════════════════════════
 
-Label(subMisc, "Anti-AFK", C.accent)
+Label(subMisc, T("antiAfk"), C.accent)
 
 local antiAfkConn = nil
-Btn(subMisc, "Anti-AFK aktivieren", function()
+Btn(subMisc, "Anti-AFK " .. T("aktivieren"), function()
     if antiAfkConn then antiAfkConn:Disconnect() antiAfkConn = nil end
     antiAfkConn = RunService.Heartbeat:Connect(function()
         VirtualUser:ClickButton1(Vector2.new(0, 0))
@@ -1664,19 +1813,19 @@ Btn(subMisc, "Anti-AFK aktivieren", function()
     Notify("PX-Menu", "Anti-AFK aktiviert", 3)
 end)
 
-Btn(subMisc, "Anti-AFK deaktivieren", function()
+Btn(subMisc, "Anti-AFK " .. T("deaktivieren"), function()
     if antiAfkConn then antiAfkConn:Disconnect() antiAfkConn = nil end
     Notify("PX-Menu", "Anti-AFK deaktiviert", 2)
 end)
 
 Sep(subMisc)
-Label(subMisc, "Server", C.accent)
+Label(subMisc, T("server"), C.accent)
 
-Btn(subMisc, "Rejoin", function()
+Btn(subMisc, T("rejoin"), function()
     TeleportService:TeleportToPlaceInstance(placeId, game.JobId, lp)
 end)
 
-Btn(subMisc, "Server Hop", function()
+Btn(subMisc, T("serverHop"), function()
     local servers = {}
     pcall(function()
         local req = HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. placeId .. "/servers/Public?sortOrder=Asc&limit=100"))
@@ -1695,7 +1844,7 @@ Btn(subMisc, "Server Hop", function()
     end
 end)
 
-Btn(subMisc, "Copy Server ID", function()
+Btn(subMisc, T("copyServerId"), function()
     pcall(function()
         if setclipboard then
             setclipboard(game.JobId)
@@ -1708,7 +1857,7 @@ end)
 --  COMBAT SUB-TAB
 -- ════════════════════════════════════════════════════════════════
 
-Label(subCombat, "Fling Engine (SkidFling)", C.accent)
+Label(subCombat, T("flingEngine"), C.accent)
 
 local flingActive = false
 local flingConn = nil
@@ -1859,14 +2008,14 @@ end
 local flingTarget = nil
 local plListFling = PlayerListWidget(subCombat, function(p) flingTarget = p end, 120)
 
-Btn(subCombat, "Fling Start", function()
+Btn(subCombat, T("flingStart"), function()
     if flingTarget then
         flingStart(flingTarget)
         Notify("PX-Menu", "Fling aktiv: " .. flingTarget.Name, 3)
     end
 end)
 
-Btn(subCombat, "Fling Stop", function()
+Btn(subCombat, T("flingStop"), function()
     flingStop()
     Notify("PX-Menu", "Fling gestoppt", 2)
 end)
@@ -1879,47 +2028,47 @@ end)
 --  ACTIONS TAB
 -- ════════════════════════════════════════════════════════════════
 
-Label(tabActions, "Ziel Spieler auswaehlen", C.accent)
+Label(tabActions, T("zielSpieler"), C.accent)
 
 local actionTarget = nil
 local plListActions = PlayerListWidget(tabActions, function(p) actionTarget = p end, 140)
 
 Sep(tabActions)
-Label(tabActions, "Aktionen", C.accent)
+Label(tabActions, T("akionen"), C.accent)
 
-Btn(tabActions, "Teleportiere zu Spieler", function()
+Btn(tabActions, T("tpZuSpieler"), function()
     if actionTarget and actionTarget.Character and hrp then
         local t = actionTarget.Character:FindFirstChild("HumanoidRootPart")
         if t then hrp.CFrame = t.CFrame * CFrame.new(0, 0, -5) end
     end
 end)
 
-Btn(tabActions, "Hinter Spieler", function()
+Btn(tabActions, T("hinterSpieler2"), function()
     if actionTarget and actionTarget.Character and hrp then
         local t = actionTarget.Character:FindFirstChild("HumanoidRootPart")
         if t then hrp.CFrame = t.CFrame * CFrame.new(0, 0, 5) end
     end
 end)
 
-Btn(tabActions, "Auf Spieler stehen", function()
+Btn(tabActions, T("aufSpielerStehen2"), function()
     if actionTarget and actionTarget.Character and hrp then
         local t = actionTarget.Character:FindFirstChild("HumanoidRootPart")
         if t then hrp.CFrame = t.CFrame * CFrame.new(0, 3, 0) end
     end
 end)
 
-Btn(tabActions, "Spectate Spieler", function()
+Btn(tabActions, T("spectate"), function()
     if actionTarget and actionTarget.Character then
         local head = actionTarget.Character:FindFirstChild("Head")
         if head then Camera.CameraSubject = head end
     end
 end)
 
-Btn(tabActions, "Spectate Stoppen", function()
+Btn(tabActions, T("spectateStop"), function()
     if humanoid then Camera.CameraSubject = humanoid end
 end)
 
-Btn(tabActions, "Liste aktualisieren", function()
+Btn(tabActions, T("listeAktualisieren"), function()
     plListActions.refresh()
 end)
 
@@ -1933,41 +2082,41 @@ local plTarget = nil
 local plListMain = PlayerListWidget(tabPlayers, function(p) plTarget = p end, 250)
 
 Sep(tabPlayers)
-Label(tabPlayers, "Aktionen", C.accent)
+Label(tabPlayers, T("akionen"), C.accent)
 
-Btn(tabPlayers, "Teleportiere zu Spieler", function()
+Btn(tabPlayers, T("tpZuSpieler"), function()
     if plTarget and plTarget.Character and hrp then
         local t = plTarget.Character:FindFirstChild("HumanoidRootPart")
         if t then hrp.CFrame = t.CFrame * CFrame.new(0, 0, -5) end
     end
 end)
 
-Btn(tabPlayers, "Hinter Spieler", function()
+Btn(tabPlayers, T("hinterSpieler2"), function()
     if plTarget and plTarget.Character and hrp then
         local t = plTarget.Character:FindFirstChild("HumanoidRootPart")
         if t then hrp.CFrame = t.CFrame * CFrame.new(0, 0, 5) end
     end
 end)
 
-Btn(tabPlayers, "Auf Spieler stehen", function()
+Btn(tabPlayers, T("aufSpielerStehen2"), function()
     if plTarget and plTarget.Character and hrp then
         local t = plTarget.Character:FindFirstChild("HumanoidRootPart")
         if t then hrp.CFrame = t.CFrame * CFrame.new(0, 3, 0) end
     end
 end)
 
-Btn(tabPlayers, "Spectate Spieler", function()
+Btn(tabPlayers, T("spectate"), function()
     if plTarget and plTarget.Character then
         local head = plTarget.Character:FindFirstChild("Head")
         if head then Camera.CameraSubject = head end
     end
 end)
 
-Btn(tabPlayers, "Spectate Stoppen", function()
+Btn(tabPlayers, T("spectateStop"), function()
     if humanoid then Camera.CameraSubject = humanoid end
 end)
 
-Btn(tabPlayers, "Liste aktualisieren", function()
+Btn(tabPlayers, T("listeAktualisieren"), function()
     plListMain.refresh()
 end)
 
@@ -1975,7 +2124,7 @@ end)
 --  SETTINGS TAB
 -- ════════════════════════════════════════════════════════════════
 
-Label(tabSettings, "Keybinds", C.accent)
+Label(tabSettings, T("keybinds"), C.accent)
 
 local keybindDefs = {}
 local keybindObjs = {}
@@ -1991,7 +2140,7 @@ local kbLabel = Instance.new("TextLabel", kbToggle)
 kbLabel.Size = UDim2.new(0.55, 0, 1, 0)
 kbLabel.Position = UDim2.new(0, 10, 0, 0)
 kbLabel.BackgroundTransparency = 1
-kbLabel.Text = "Menu Toggle"
+kbLabel.Text = T("menuToggle")
 kbLabel.TextColor3 = C.text
 kbLabel.Font = Enum.Font.GothamBold
 kbLabel.TextSize = 12
@@ -2033,9 +2182,57 @@ for _, b in ipairs(binds) do
 end
 
 Sep(tabSettings)
-Label(tabSettings, "Aktionen", C.accent)
+Label(tabSettings, T("sprache"), C.accent)
 
-Btn(tabSettings, "Settings zuruecksetzen", function()
+local langFrame = Instance.new("Frame", tabSettings)
+langFrame.Size = UDim2.new(1, 0, 0, 36)
+langFrame.BackgroundColor3 = C.card
+langFrame.BorderSizePixel = 0
+Corner(langFrame, 6)
+Stroke(langFrame, C.accentDim, 1)
+local langLabel = Instance.new("TextLabel", langFrame)
+langLabel.Size = UDim2.new(0.55, 0, 1, 0)
+langLabel.Position = UDim2.new(0, 10, 0, 0)
+langLabel.BackgroundTransparency = 1
+langLabel.Text = T("sprache")
+langLabel.TextColor3 = C.text
+langLabel.Font = Enum.Font.GothamBold
+langLabel.TextSize = 12
+langLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local function makeLangBtn(parent, txt, posX, isActive)
+    local b = Instance.new("TextButton", parent)
+    b.Size = UDim2.new(0, 50, 0, 22)
+    b.Position = UDim2.new(1, posX, 0.5, -11)
+    b.BackgroundColor3 = isActive and C.accent or C.pillBg
+    b.Text = txt
+    b.TextColor3 = isActive and C.text or C.textDim
+    b.Font = Enum.Font.GothamBold
+    b.TextSize = 10
+    b.BorderSizePixel = 0
+    b.AutoButtonColor = false
+    Corner(b, 4)
+    return b
+end
+
+local langDE = makeLangBtn(langFrame, "DE", -116, lang == "DE")
+local langEN = makeLangBtn(langFrame, "EN", -60, lang == "EN")
+
+local function refreshLang()
+    langDE.BackgroundColor3 = lang == "DE" and C.accent or C.pillBg
+    langDE.TextColor3 = lang == "DE" and C.text or C.textDim
+    langEN.BackgroundColor3 = lang == "EN" and C.accent or C.pillBg
+    langEN.TextColor3 = lang == "EN" and C.text or C.textDim
+    IndLabel.Text = "PX-Menu | " .. ExecutorName .. " | [" .. toggleKey .. "] to toggle"
+end
+
+langDE.MouseButton1Click:Connect(function() lang = "DE"; refreshLang(); Notify("PX-Menu", "Sprache: Deutsch", 2) end)
+langEN.MouseButton1Click:Connect(function() lang = "EN"; refreshLang(); Notify("PX-Menu", "Language: English", 2) end)
+
+Sep(tabSettings)
+Label(tabSettings, T("akionen"), C.accent)
+
+Btn(tabSettings, T("settingsZurueck"), function()
     toggleKey = "K"
     kbBtn.Text = "K"
     for _, kb in ipairs(keybindObjs) do
@@ -2043,7 +2240,7 @@ Btn(tabSettings, "Settings zuruecksetzen", function()
     end
 end)
 
-Btn(tabSettings, "Menu schliessen", function()
+Btn(tabSettings, T("menuSchliessen"), function()
     -- Cleanup
     if flyConn then flyConn:Disconnect() end
     if noclipConn then noclipConn:Disconnect() end
@@ -2121,17 +2318,17 @@ end)
 -- ════════════════════════════════════════════════════════════════
 
 task.spawn(function()
-    UpdateLoading(0.1, "Initialisiere Core...")
+    UpdateLoading(0.1, T("loadCore"))
     task.wait(0.2)
-    UpdateLoading(0.3, "Lade Game Detection...")
+    UpdateLoading(0.3, T("loadGameDet"))
     task.wait(0.2)
-    UpdateLoading(0.5, "Lade Features...")
+    UpdateLoading(0.5, T("loadFeatures"))
     task.wait(0.2)
-    UpdateLoading(0.7, "Erstelle UI...")
+    UpdateLoading(0.7, T("loadUI"))
     task.wait(0.2)
-    UpdateLoading(0.9, "Finalisiere...")
+    UpdateLoading(0.9, T("loadFinal"))
     task.wait(0.2)
-    UpdateLoading(1.0, "Fertig!")
+    UpdateLoading(1.0, T("loadDone"))
     task.wait(0.3)
     LoadingGui:Destroy()
     Main.Visible = true

@@ -2,7 +2,7 @@
 
 
 local GLOBAL_ENV = (typeof(getgenv) == "function" and getgenv()) or _G
-local RUNTIME_KEY = "__TLSteal_AvatarOutfitPanelRuntime"
+local RUNTIME_KEY = "__PXSteal_AvatarOutfitPanelRuntime"
 
 local prev = GLOBAL_ENV and GLOBAL_ENV[RUNTIME_KEY]
 if type(prev) == "table" and type(prev.cleanup) == "function" then
@@ -52,7 +52,7 @@ local C = {
 	BORDER=Color3.fromRGB(70,70,74), BORDER_SOFT=Color3.fromRGB(46,46,50),
 	CLOSE_HOVER=Color3.fromRGB(200,30,30),
 	CLOSE_IMG="rbxassetid://121032825074289", KEYBIND=Enum.KeyCode.L,
-	WROOT="TLSteal", CACHE_DIR="Cache", SAVED_DIR="SavedOutfits",
+	WROOT="PXSteal", CACHE_DIR="Cache", SAVED_DIR="SavedOutfits",
 	DISK_DIR="TLSteal/Cache", DISK_TTL=86400, SAVED_FILE="saved_outfits.dat",
 	REMOTE="BLINK_RELIABLE_REMOTE", DEBUG=false,
 }
@@ -115,13 +115,13 @@ local function _fsRead(path)
 	local ok, raw = pcall(FS_rawRead, path)
 	if not ok or not raw then return nil end
 	local pL = path:lower()
-	if pL:find("tlsteal") then return _TL_deobf(raw) end
+	if pL:find("PXSteal") then return _TL_deobf(raw) end
 	return raw
 end
 local function _fsWrite(path, content)
 	if not FS_rawWrite then return end
 	local pL = path:lower()
-	local final = pL:find("tlsteal") and _TL_obf(content) or content
+	local final = pL:find("PXSteal") and _TL_obf(content) or content
 	pcall(FS_rawWrite, path, final)
 end
 local FS = {
@@ -224,21 +224,21 @@ local function tweenClose(frame, w, h, cb)
 	task.delay(0.08, function() frame.Visible = false; s.Scale = 1; if cb then cb() end end)
 end
 
-local function OBF(r) return "TLSteal::AvatarOutfitPanel" end
+local function OBF(r) return "PXSteal::AvatarOutfitPanel" end
 local OBF_KEY = OBF()
 local OBF_LEN = #OBF_KEY
 
-local _TL_OBF_HDR = "--[TL-OBF]\n"
-local _TL_OBF_HDR_LEN = #_TL_OBF_HDR
+local _PX_OBF_HDR = "--[PX-OBF]\n"
+local _PX_OBF_HDR_LEN = #_PX_OBF_HDR
 local function _TL_obf(d)
 	if typeof(d) ~= "string" then return d end
 	local r = {}
 	for i = 1, #d do r[i] = string.char((d:byte(i) + 42) % 256) end
-	return _TL_OBF_HDR .. table.concat(r):reverse()
+	return _PX_OBF_HDR .. table.concat(r):reverse()
 end
 local function _TL_deobf(d)
-	if typeof(d) ~= "string" or d:sub(1, _TL_OBF_HDR_LEN) ~= _TL_OBF_HDR then return d end
-	local b = d:sub(_TL_OBF_HDR_LEN + 1):reverse()
+	if typeof(d) ~= "string" or d:sub(1, _PX_OBF_HDR_LEN) ~= _PX_OBF_HDR then return d end
+	local b = d:sub(_PX_OBF_HDR_LEN + 1):reverse()
 	local r = {}
 	for i = 1, #b do r[i] = string.char((b:byte(i) - 42) % 256) end
 	return table.concat(r)
